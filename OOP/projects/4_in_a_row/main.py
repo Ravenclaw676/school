@@ -21,10 +21,10 @@ class Board():
         self.__columns = columns
         self.__rows = rows
         self.__board = []
-        for y in range(0, self.__columns):
+        for column_number in range(0, self.__columns):
             self.__board.append([])
-            for x in range(0, self.__rows):
-                self.__board[y].append(0)
+            for _ in range(0, self.__rows):
+                self.__board[column_number].append(0)
 
     def __repr__(self) -> str:
         string = ""
