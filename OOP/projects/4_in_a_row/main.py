@@ -1,5 +1,6 @@
 """The main file of the four in a row game"""
 
+
 class Player():
     """A class then encapsulates the player"""
     def __init__(self, player_name: str, player_number: int):
@@ -72,25 +73,31 @@ class Board():
             return "column full"
 
     def check_winner(self) -> int:
-        """checks all directions on the board and returns the player number if 4 in a row has been formed"""
-        #vertical_result = self.check_vertical()
-        #if vertical_result != 0:
+        """
+        checks all directions on the board and returns the player number if 4
+        in a row has been formed
+        """
+        # vertical_result = self.check_vertical()
+        # if vertical_result != 0:
         #    return vertical_result
 
         horizontal_result = self.check_horizontal()
         if horizontal_result != 0:
             return horizontal_result
 
-        #right_diagonal_result = self.check_right_diagonal()
-        #if right_diagonal_result != 0:
+        # right_diagonal_result = self.check_right_diagonal()
+        # if right_diagonal_result != 0:
         #    return right_diagonal_result
 
-        #left_diagonal_result = self.check_left_diagonal()
-        #if left_diagonal_result != 0:
+        # left_diagonal_result = self.check_left_diagonal()
+        # if left_diagonal_result != 0:
         #    return left_diagonal_result
 
     def check_horizontal(self) -> int:
-        """checks all vertical columns for a 4 in a row and returns the winner"""
+        """
+        checks all the horizontal rows for a 4 in a row and returns the player 
+        number of the player who achived this
+        """
         for row in reversed(self.__board):
             last_value = 0
             number_in_a_row = 0
@@ -101,12 +108,16 @@ class Board():
                     number_in_a_row += 1
                 elif value != 0 and value != last_value:
                     last_value = value
+                    number_in_a_row = 1
+
 
 board = Board(8, 8)
 player1 = Player("andrew", 1)
+player2 = Player("andrew", 2)
 board.add_token(player1, 0)
-board.add_token(player1, 1)
+board.add_token(player2, 1)
 board.add_token(player1, 2)
 board.add_token(player1, 3)
+board.add_token(player1, 4)
 print(board)
 print(board.check_winner())
