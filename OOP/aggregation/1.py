@@ -21,8 +21,8 @@ class Quadrilateral(Polygon):
     def noofsides(self):
         print("I have 4 sides")
 
-jesus = Polygon()
-jesus.noofsides()
+#jesus = Polygon()
+#jesus.noofsides()
 
 R = Triangle()
 R.noofsides()
