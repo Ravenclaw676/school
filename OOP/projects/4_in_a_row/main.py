@@ -77,25 +77,45 @@ class Board():
         checks all directions on the board and returns the player number if 4
         in a row has been formed
         """
-        # vertical_result = self.check_vertical()
-        # if vertical_result != 0:
-        #    return vertical_result
+        vertical_result = self.check_vertical()
+        if vertical_result != 0:
+            return vertical_result
 
         horizontal_result = self.check_horizontal()
         if horizontal_result != 0:
             return horizontal_result
 
-        # right_diagonal_result = self.check_right_diagonal()
-        # if right_diagonal_result != 0:
-        #    return right_diagonal_result
+        right_diagonal_result = self.check_right_diagonal()
+        if right_diagonal_result != 0:
+           return right_diagonal_result
 
         # left_diagonal_result = self.check_left_diagonal()
         # if left_diagonal_result != 0:
         #    return left_diagonal_result
 
+    def check_vertical(self) -> int:
+        """
+        checks all vertical columns for 4 in a row and returns the player
+        number of of the player who achived this
+        """
+        for column in range(0, self.__columns):
+            last_value = 0
+            number_in_a_row = 0
+            for row in range(0, self.__rows):
+                value = self.__board[row][column]
+                if value == last_value and number_in_a_row == 3:
+                    return value
+                elif value != 0 and value == last_value:
+                    number_in_a_row += 1
+                elif value != 0 and value != last_value:
+                    last_value = value
+                    number_in_a_row = 1
+        return 0
+
+
     def check_horizontal(self) -> int:
         """
-        checks all the horizontal rows for a 4 in a row and returns the player 
+        checks all the horizontal rows for a 4 in a row and returns the player
         number of the player who achived this
         """
         for row in reversed(self.__board):
@@ -109,15 +129,35 @@ class Board():
                 elif value != 0 and value != last_value:
                     last_value = value
                     number_in_a_row = 1
+        return 0
+
+    def check_right_diagonal(self):
+        last_value = 0
+        number_in_a_row = 0
+        for row, column in zip(range(0, self.__rows - 2), range(0, self.__columns -2)):
+            value = self.__board[row][column]
+            if value == last_value and number_in_a_row == 3:
+                return value
+            elif value != 0 and value == last_value:
+                number_in_a_row += 1
+            elif value != 0 and value != last_value:
+                last_value = value
+                number_in_a_row = 1
+        return 0
 
 
 board = Board(8, 8)
 player1 = Player("andrew", 1)
 player2 = Player("andrew", 2)
 board.add_token(player1, 0)
+board.add_token(player2, 0)
+board.add_token(player1, 0)
+board.add_token(player2, 0)
+board.add_token(player1, 1)
+board.add_token(player1, 1)
 board.add_token(player2, 1)
-board.add_token(player1, 2)
-board.add_token(player1, 3)
-board.add_token(player1, 4)
+board.add_token(player2, 2)
+board.add_token(player2, 2)
+board.add_token(player2, 3)
 print(board)
 print(board.check_winner())
