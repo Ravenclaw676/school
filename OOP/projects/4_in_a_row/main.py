@@ -69,8 +69,8 @@ class Board():
                 if self.__board[row][column] == 0:
                     self.__board[row][column] = player.get_number()
                     return "done"
-        else:
-            return "column full"
+        return "column full"
+        
 
     def check_winner(self) -> int:
         """
@@ -132,18 +132,38 @@ class Board():
         return 0
 
     def check_right_diagonal(self):
+        """
+        i hate this functions
+        """
         last_value = 0
         number_in_a_row = 0
-        for row, column in zip(range(0, self.__rows - 2), range(0, self.__columns -2)):
-            value = self.__board[row][column]
-            if value == last_value and number_in_a_row == 3:
-                return value
-            elif value != 0 and value == last_value:
-                number_in_a_row += 1
-            elif value != 0 and value != last_value:
-                last_value = value
-                number_in_a_row = 1
-        return 0
+        initial_row = 0
+        initial_column = 0
+        while initial_row < self.__rows - 4:
+            for row, column in zip(range(initial_row, self.__rows - 2), range(0, self.__columns -2)):
+                value = self.__board[row][column]
+                if value == last_value and number_in_a_row == 3:
+                    return value
+                elif value != 0 and value == last_value:
+                    number_in_a_row += 1
+                elif value != 0 and value != last_value:
+                    last_value = value
+                    number_in_a_row = 1
+            initial_row += 1
+
+        while initial_column < self.__columns - 1:
+            for row, column in zip(range(0, self.__rows - 2), range(initial_column, self.__columns -2)):
+                value = self.__board[row][column]
+                if value == last_value and number_in_a_row == 3:
+                    return value
+                elif value != 0 and value == last_value:
+                    number_in_a_row += 1
+                elif value != 0 and value != last_value:
+                    last_value = value
+                    number_in_a_row = 1
+            initial_column += 1
+
+        return 0  
 
 
 board = Board(8, 8)
