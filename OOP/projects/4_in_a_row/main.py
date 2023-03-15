@@ -89,9 +89,9 @@ class Board():
         if right_diagonal_result != 0:
            return right_diagonal_result
 
-        # left_diagonal_result = self.check_left_diagonal()
-        # if left_diagonal_result != 0:
-        #    return left_diagonal_result
+        left_diagonal_result = self.check_left_diagonal()
+        if left_diagonal_result != 0:
+            return left_diagonal_result
 
     def check_vertical(self) -> int:
         """
@@ -139,8 +139,8 @@ class Board():
         number_in_a_row = 0
         initial_row = 0
         initial_column = 0
-        while initial_row < self.__rows - 4:
-            for row, column in zip(range(initial_row, self.__rows - 2), range(0, self.__columns -2)):
+        while initial_row < self.__rows:
+            for row, column in zip(range(initial_row, self.__rows), range(0, self.__columns)):
                 value = self.__board[row][column]
                 if value == last_value and number_in_a_row == 3:
                     return value
@@ -151,8 +151,8 @@ class Board():
                     number_in_a_row = 1
             initial_row += 1
 
-        while initial_column < self.__columns - 1:
-            for row, column in zip(range(0, self.__rows - 2), range(initial_column, self.__columns -2)):
+        while initial_column < self.__columns:
+            for row, column in zip(range(0, self.__rows), range(initial_column, self.__columns)):
                 value = self.__board[row][column]
                 if value == last_value and number_in_a_row == 3:
                     return value
@@ -163,21 +163,56 @@ class Board():
                     number_in_a_row = 1
             initial_column += 1
 
-        return 0  
+        return 0
+    
+    def check_left_diagonal(self) -> int:
+        """
+        i hate this functions
+        """
+        last_value = 0
+        number_in_a_row = 0
+        initial_row = 0
+        initial_column = 0
+        while initial_row < self.__rows:
+            for row, column in zip(range(self.__rows, initial_row, -1), range(self.__columns, 0 -1)):
+                value = self.__board[row - 1][column - 1]
+                if value == last_value and number_in_a_row == 3:
+                    return value
+                elif value != 0 and value == last_value:
+                    number_in_a_row += 1
+                elif value != 0 and value != last_value:
+                    last_value = value
+                    number_in_a_row = 1
+            initial_row += 1
+
+        while initial_column < self.__columns:
+            for row, column in zip(range(self.__rows, 0, -1), range(self.__columns, initial_column, -1)):
+                value = self.__board[row - 1][column - 1]
+                if value == last_value and number_in_a_row == 3:
+                    return value
+                elif value != 0 and value == last_value:
+                    number_in_a_row += 1
+                elif value != 0 and value != last_value:
+                    last_value = value
+                    number_in_a_row = 1
+            initial_column += 1
+
+        return 0
+
 
 
 board = Board(8, 8)
 player1 = Player("andrew", 1)
 player2 = Player("andrew", 2)
 board.add_token(player1, 0)
-board.add_token(player2, 0)
-board.add_token(player1, 0)
-board.add_token(player2, 0)
-board.add_token(player1, 1)
-board.add_token(player1, 1)
 board.add_token(player2, 1)
+board.add_token(player1, 1)
 board.add_token(player2, 2)
-board.add_token(player2, 2)
+board.add_token(player1, 2)
+board.add_token(player1, 2)
 board.add_token(player2, 3)
+board.add_token(player1 ,3)
+board.add_token(player2 ,3)
+board.add_token(player1, 3)
 print(board)
 print(board.check_winner())
