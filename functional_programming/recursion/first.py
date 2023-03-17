@@ -1,9 +1,9 @@
 """this is an illustration of iteration vs recurcion"""
 #iteration
 arr = [3, 6, 2, 8, 1]
-number = 0 
-for i in range(0, len(arr)):
-    number += arr[i]
+number = 0
+for i, num in enumerate(arr):
+    number += num
 print(number)
 
 
