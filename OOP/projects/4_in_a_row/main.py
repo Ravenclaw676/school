@@ -70,7 +70,7 @@ class Board():
                     self.__board[row][column] = player.get_number()
                     return "done"
         return "column full"
-        
+
 
     def check_winner(self) -> int:
         """
@@ -164,7 +164,7 @@ class Board():
             initial_column += 1
 
         return 0
-    
+
     def check_left_diagonal(self) -> int:
         """
         i hate this functions
