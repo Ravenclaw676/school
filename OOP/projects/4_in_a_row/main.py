@@ -87,7 +87,7 @@ class Board():
 
         right_diagonal_result = self.check_right_diagonal()
         if right_diagonal_result != 0:
-           return right_diagonal_result
+            return right_diagonal_result
 
         left_diagonal_result = self.check_left_diagonal()
         if left_diagonal_result != 0:
@@ -169,13 +169,19 @@ class Board():
         """
         i hate this functions
         """
+        reversed_board = self.__board[::-1]
+        for i in range(0, len(reversed_board) - 1):
+            reversed_board[i] = reversed_board[i][::-1]
+
+
         last_value = 0
         number_in_a_row = 0
         initial_row = 0
         initial_column = 0
         while initial_row < self.__rows:
-            for row, column in zip(range(self.__rows, initial_row, -1), range(self.__columns, 0 -1)):
-                value = self.__board[row - 1][column - 1]
+            for row, column in zip(range(initial_row, self.__rows), range(0, self.__columns)):
+                value = reversed_board[row][column]
+                print(row, column, value)
                 if value == last_value and number_in_a_row == 3:
                     return value
                 elif value != 0 and value == last_value:
@@ -186,8 +192,9 @@ class Board():
             initial_row += 1
 
         while initial_column < self.__columns:
-            for row, column in zip(range(self.__rows, 0, -1), range(self.__columns, initial_column, -1)):
-                value = self.__board[row - 1][column - 1]
+            for row, column in zip(range(0, self.__rows), range(initial_column, self.__columns)):
+                value = reversed_board[row][column]
+                print(row, column, value)
                 if value == last_value and number_in_a_row == 3:
                     return value
                 elif value != 0 and value == last_value:
@@ -198,7 +205,6 @@ class Board():
             initial_column += 1
 
         return 0
-
 
 
 board = Board(8, 8)
