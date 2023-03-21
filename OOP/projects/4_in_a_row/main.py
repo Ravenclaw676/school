@@ -96,6 +96,8 @@ class Board():
         if left_diagonal_result != 0:
             return left_diagonal_result
 
+        return 0
+
     def check_vertical(self) -> int:
         """
         checks all vertical columns for 4 in a row and returns the player
@@ -180,7 +182,8 @@ class Board():
         initial_row = 0
         initial_column = 0
         while initial_row < self.__rows:
-            for row, column in zip(range(initial_row, self.__rows), range(0, self.__columns)):
+            for row, column in zip(range(initial_row, self.__rows),
+                                   range(0, self.__columns)):
                 value = reversed_board[row][column]
                 if value == last_value and number_in_a_row == 3:
                     return value
@@ -192,7 +195,8 @@ class Board():
             initial_row += 1
 
         while initial_column < self.__columns:
-            for row, column in zip(range(0, self.__rows), range(initial_column, self.__columns)):
+            for row, column in zip(range(0, self.__rows),
+                                   range(initial_column, self.__columns)):
                 value = reversed_board[row][column]
                 if value == last_value and number_in_a_row == 3:
                     return value
@@ -205,23 +209,29 @@ class Board():
 
         return 0
 
+
 def drop_token(player: Player, game_board: Board) -> None:
-    """a board that handles the dropping of tokens in relation to the userinput"""
+    """
+    a board that handles the dropping of tokens in relation to the userinput
+    """
     print("Player", player.get_number(), "'s turn")
     try:
-        column = int(input("Please enter the column you want to drop a piece: "))
+        column = int(
+            input("Please enter the column you want to drop a piece: "))
     except TypeError:
         print("Please enter a number")
 
-    while 1 < column <= game_board.get_column():
+    while column not in range(game_board.get_column() + 1):
         try:
             print("please an enter a number within the bounds of the board")
-            column = int(input("Please enter the column you want to drop a piece: "))
+            column = int(
+                input("Please enter the column you want to drop a piece: "))
         except TypeError:
             print("please enter a number")
 
     column -= 1
     game_board.add_token(player, column)
+
 
 def main() -> None:
     """the main function of 4 in a row"""
@@ -239,17 +249,27 @@ def main() -> None:
     board = Board(board_width, board_height)
 
     winner = 0
-    while winner == 0:
+    while not board.board_full():
         print(board)
         drop_token(player1, board)
         print(board)
+        if board.check_winner() != 0:
+            winner = board.check_winner()
+            break
         drop_token(player2, board)
         print(board)
-        winner = board.check_winner()
-    if winner == 1:
+        if board.check_winner() != 0:
+            winner = board.check_winner()
+            break
+
+    print("Game over!")
+    if board.board_full():
+        print("Tie, the board was full and nobody got 4 in a rrow")
+    elif winner == 1:
         print(player1.get_name(), " wins")
     elif winner == 1:
         print(player2.get_name(), "wins")
+
 
 if __name__ == "__main__":
     main()
