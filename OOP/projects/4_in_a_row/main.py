@@ -215,18 +215,20 @@ def drop_token(player: Player, game_board: Board) -> None:
     a board that handles the dropping of tokens in relation to the userinput
     """
     print("Player", player.get_number(), "'s turn")
-    try:
-        column = int(
-            input("Please enter the column you want to drop a piece: "))
-    except TypeError:
-        print("Please enter a number")
+    while True:
+        try:
+            column = int(
+                input("Please enter the column you want to drop a piece: "))
+            break
+        except ValueError:
+            print("Please enter a number")
 
     while column not in range(game_board.get_column() + 1):
         try:
             print("please an enter a number within the bounds of the board")
             column = int(
                 input("Please enter the column you want to drop a piece: "))
-        except TypeError:
+        except ValueError:
             print("please enter a number")
 
     column -= 1
@@ -242,15 +244,20 @@ def main() -> None:
 
     board_width = 0
     while board_width <= 4:
-        board_width = int(input("Please enter the board's width: "))
+        try:
+            board_width = int(input("Please enter the board's width: "))
+        except ValueError:
+            print("Please enter a number")
     board_height = 0
     while board_height <= 4:
-        board_height = int(input("Please enter the board's height: "))
+        try:
+            board_height = int(input("Please enter the board's height: "))
+        except ValueError:
+            print("Please enter a number: ")
     board = Board(board_width, board_height)
 
     winner = 0
     while not board.board_full():
-        print(board)
         drop_token(player1, board)
         print(board)
         if board.check_winner() != 0:
@@ -261,7 +268,8 @@ def main() -> None:
         if board.check_winner() != 0:
             winner = board.check_winner()
             break
-
+    
+    print(board)
     print("Game over!")
     if board.board_full():
         print("Tie, the board was full and nobody got 4 in a rrow")
