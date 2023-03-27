@@ -268,7 +268,7 @@ def main() -> None:
         if board.check_winner() != 0:
             winner = board.check_winner()
             break
-    
+
     print(board)
     print("Game over!")
     if board.board_full():
