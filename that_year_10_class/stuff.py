@@ -1,1 +1,0 @@
-for i, name in enumerate(file)
