@@ -2,6 +2,7 @@ class Board(object):
     def __init__(self):
         print("no")
 
+
 class Player (object):
     def __init__(self, number: int, game_board: Board):
         self._board = game_board
