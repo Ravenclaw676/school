@@ -25,6 +25,12 @@ class Player (object):
         y = self._get_column()
         self._board.take_shot(x, y)
 
+class human_player(Player):
+    def _get_row(self) -> int:
+        row = -1
+        while row not in range(0, self._board.get_height() - 1):
+            row = int(input(f"Please enter the row you want to shoot {self._board.get_height()}")) - 1
+
 
 board = Board()
 player = Player(1, board)
