@@ -9,7 +9,7 @@ class Board(object):
 
         for row in range(0, rows - 1):
             self.__board.append([])
-            for column in range(0, columns, - 1):
+            for _ in range(0, columns, - 1):
                 self.__board[row].append("E")
 
     def get_width(self) -> int:
