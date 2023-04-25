@@ -1,4 +1,5 @@
-from random import randint, choice
+from random import randint
+from random import choice
 
 class Board(object):
     def __init__(self, columns: int, rows: int, player_number: int):
