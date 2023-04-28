@@ -10,13 +10,16 @@ class Board(object):
 
         for row in range(0, rows - 1):
             self.__board.append([])
-            for _ in range(0, columns, - 1):
+            for _ in range(0, columns - 1):
                 self.__board[row].append("E")
+
+    def __repr__(self) -> str:
+        return str(self.__board)
 
     def get_width(self) -> int:
         return self.__columns
 
-    def get_hight(self) -> int:
+    def get_height(self) -> int:
         return self.__rows
 
     def take_shot(self, x: int, y: int) -> bool:
@@ -78,25 +81,25 @@ class Player (object):
 
 
 class Human_Player(Player):
-    def _get_row(self) -> int:
+    def _get_row(self, word: str) -> int:
         row = -1
         while row not in range(0, self._board.get_height() - 1):
-            row = int(input(f"Please enter the row you want to shoot \
-                                        {self._board.get_height()}")) - 1
+            row = int(input(f"Please enter the row you want to {word} \
+ The max number is: {self._board.get_height()}? ")) - 1
 
         return row
 
-    def _get_column(self) -> int:
+    def _get_column(self, word: str) -> int:
         column = -1
         while column not in range(0, self._board.get_width() - 1):
-            column = int(input(f"Please enter the column you want to shoot \
-                                        {self._board.get_width()}")) - 1
+            column = int(input(f"Please enter the column you want to {word}\
+ The max numbers is: {self._board.get_width()}? ")) - 1
         return column
 
     def take_shot(self):
         while True:
-            x = self._get_row()
-            y = self._get_column()
+            x = self._get_row("shoot")
+            y = self._get_column("shoot")
             if not self._board.take_shot(x, y):
                 print("you can't shoot somewhere you have already shot.")
             else:
@@ -109,13 +112,14 @@ class Human_Player(Player):
                 direction = ""
                 while direction not in ["h", "v"]:
                     direction = input("What direction is the ship facing,\
-                                      horizontal or vertical (h/v)").lower()
-                x = self._get_column()
-                y = self._get_row()
+horizontal or vertical (h/v)").lower()
+                x = self._get_column("place the ship")
+                y = self._get_row("place the ship")
                 try:
                     self._board.place_ship(ship, x, y, direction)
                 except Exception:
                     print("Ships can not overlap, try again")
+                    print(self._board)
                 error = False
 
 
@@ -124,7 +128,7 @@ class Computer_Player(Player):
         return randint(0, self._board.get_width() - 1)
 
     def _get_row(self) -> int:
-        return randint(0, self._board.get_hight() - 1)
+        return randint(0, self._board.get_height() - 1)
 
     def take_shot(self):
         while True:
