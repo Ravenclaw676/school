@@ -35,13 +35,13 @@ class Board(object):
 
     def place_ship(self, length: int, x: int, y: int, direction: str):
         if direction == "h":
-            for i in range(0, length - 1):
+            for i in range(0, length):
                 if self.__board[y][x + i] == "S":
                     raise Exception
                 else:
                     self.__board[y][x + i] = "S"
         else:
-            for i in range(0, length - 1):
+            for i in range(0, length):
                 if self.__board[y + i][x] == "S":
                     raise Exception
                 else:
@@ -164,7 +164,7 @@ def main():
     human_player._place_ships()
     computer_player._place_ships()
 
-    while board1.check_winner() != 0 or board2.check_winner() != 0:
+    while board1.check_winner() == 0 or board2.check_winner() == 0:
         human_player.take_shot()
         computer_player.take_shot()
 
