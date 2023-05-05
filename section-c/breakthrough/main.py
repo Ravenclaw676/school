@@ -152,10 +152,10 @@ class Breakthrough():
             return False
 
     def __LoadLocks(self):
-        FileName = "locks.txt"
+        FileName =  "section-c/breakthrough/locks.txt"
         self.__Locks = []
         try:
-            with open(FileName) as f:
+            with open("section-c/breakthrough/locks.txt") as f:
                 LineFromFile = f.readline().rstrip()
                 while LineFromFile != "":
                     Challenges = LineFromFile.split(";")
